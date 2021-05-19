@@ -1,0 +1,52 @@
+{% extends 'faceApp/base.html' %}
+
+
+
+{% block upload %}
+
+
+<style>
+    #bt{
+        background-color: royalblue;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    #upload_bar{
+        display: inline;
+        text-align: center;
+        width: 300px;
+        margin: 0 auto;
+    }
+</style>
+
+
+<div id="upload_bar">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="submit" value="Upload Image" id="bt">
+        <br>
+    
+        {{ form.image }}
+        
+    </form>        
+</div>
+
+
+{% endblock  %}
+
+<br />
+
+
+{% block content %}
+    
+
+
+{% endblock  %}

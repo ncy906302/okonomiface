@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    #header-top {
+      background-color: #000000;
+      color: #fff;
+      font-size: 100%;
+      font-weight: bold;
+      margin: 0;
+      padding: 10px;
+    }
+
+    
+    #header-top a{
+      color: white;
+      text-decoration: none;
+    }
+    #header-main{
+      background: skyblue;
+    }
+    #header-main h1{
+      text-align: center;
+      padding: 20px;
+    }
+    #header-main h2{
+      text-align: center;
+      padding: 10px;
+      padding-bottom: 30px;
+    }
+
+    .container{
+      max-width: 1280px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+  </style>
+  <title>FaceApp</title>
+  <link rel="icon" href="http://example.com/favicon.png">
+</head>
+
+<body>
+
+  <div id="header">
+    <div id="header-top">
+      <a href="/faceApp/">FaceApp AV女優顔画像検索</a>
+    </div>
+    <div id="header-main">
+        <h1>写真で探そうAV女優</h1>
+        <h2>Find AV star with face image.</h2>
+    </div>
+  </div>
+
+
+
+
+    {% block upload %}
+    {% endblock  %}
+
+
+  <div class="container">
+
+    {% block content %}
+    {% endblock  %}
+
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+</body>
+
+</html>

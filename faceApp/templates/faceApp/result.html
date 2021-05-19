@@ -1,0 +1,191 @@
+{% extends 'faceApp/base.html' %}
+
+
+
+{% block upload %}
+
+
+<style>
+    #bt{
+        background-color: royalblue;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    #upload_bar{
+        display: inline;
+        text-align: center;
+        width: 300px;
+        margin: 0 auto;
+    }
+</style>
+
+
+<div id="upload_bar">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="submit" value="Upload Image" id="bt">
+        <br>
+    
+        {{ form.image }}
+        
+    </form>        
+</div>
+
+
+{% endblock  %}
+
+<br />
+
+
+{% block content %}
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        
+    <style>
+
+        #main h2{
+            text-align: center;
+        }
+
+        .info_content{
+            float: left;
+            background: skyblue;
+            width: 300px;
+            height: 400px;
+            margin: 10px;
+            overflow:hidden;
+            border-radius: 5px 5px 5px 5px;
+        }
+        .info_content .scroll{
+            overflow-y:scroll;
+            height: 330px;
+            width: 100%;
+        }
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent; /* make scrollbar transparent */
+        }
+
+        .info_content h2{
+            height: 35px;
+            text-align: center;
+            background:#004DD1;
+            color: white;
+        }
+
+        .info_content .scroll img{
+            width: 100px;
+            float: left;
+        }
+
+        .info_content .under_bar{
+            height: 35px;
+            background: #ff5819;
+            border-radius: 5px 5px 5px 5px;
+        }
+        .info_content .under_bar p{
+            float: left;
+            line-height: 35px;
+            color: white;
+            font-weight: bold;
+            padding-left: 10px;
+        }
+        .info_content .under_bar img{
+            background: white;
+            padding: 3px;
+            float: right;
+            height: 29px;
+            margin-right: 10px;
+        }
+
+    </style>
+   
+
+    <div id="main">
+        <h2>It look like....</h2>
+
+
+    </div>
+
+    <script>
+        scroll_div_list = []
+        var main_content = document.getElementById('main');
+        {% for i in top_5 %}
+             $.ajax({
+                beforeSend: function(){
+                    var info_content_div = document.createElement('div');
+                    info_content_div.className = 'info_content';
+                    var new_h1 = document.createElement('h2');
+                    var scroll_div = document.createElement('div');
+                    scroll_div.className ='scroll';
+                    new_h1.innerHTML = '{{ i.0 }}';
+                    info_content_div.appendChild(new_h1);
+                    info_content_div.appendChild(scroll_div);
+                    scroll_div_list.push(scroll_div);
+                    main_content.appendChild(info_content_div);
+                    
+                    
+
+                    var a_tag = document.createElement('a');
+                    a_tag.href = 'https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={{ i.1 }}/'
+
+
+
+                    var under_bar_div =document.createElement('div');
+                    under_bar_div.className = 'under_bar';
+                    var new_p = document.createElement('p');
+                    new_p.innerHTML = '{{ i.0 }}' + 'の動画一覧';
+                    var new_img = document.createElement('img');
+                    new_img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/FANZA_logo.svg/1200px-FANZA_logo.svg.png';
+                    under_bar_div.appendChild(new_p);
+                    under_bar_div.appendChild(new_img);
+                    a_tag.appendChild(under_bar_div);
+
+
+
+                    info_content_div.appendChild(a_tag);
+
+
+
+                },
+                url : '/faceApp/ajax/',
+                type: "POST",
+                data : {csrfmiddlewaretoken: '{{ csrf_token }}' ,name: '{{ i.0 }}' ,id: '{{ i.1 }}'},
+                dataType : "json",
+                success: function(data){
+                    // do something
+                    for(var i=0;i<data['pic_url'].length;i++){
+                        var new_img = document.createElement('img');
+                        new_img.src = data['pic_url'][i];
+                        scroll_div_list[{{ forloop.counter0 }}].appendChild(new_img);
+                    }
+                    // console.log(data['pic_url']);
+                }
+            });
+        {% endfor %}
+    </script>
+
+
+
+<!-- 
+    {% for pic in pic_url %}
+    <div class="info_content">
+            <h1>{{ pic.0 }}</h1>
+            {% for url in pic.1 %}
+                <div class="img_content"><img src="{{url}}" alt=""></div>
+            {% endfor %}
+    </div>
+    {% endfor %} -->
+
+
+
+{% endblock  %}
